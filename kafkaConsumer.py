@@ -41,7 +41,7 @@ while True:
             if (continente!=False):
                 time = datetime.now()
                 try:
-                    session.execute("INSERT INTO "+ continente +" (id, time,coord, name, country, temp, temp_min, temp_max, pressure, humidity, wind_speed, wind_deg) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);", (str(message["id"]), str(time),"lon:"+str(message["coord"]["lon"]) + " lat:"+str(message["coord"]["lat"]), message["name"], message["sys"]["country"], str(round(message["main"]["temp"] -273.15),3), str(round(message["main"]["temp_min"] -273.15),3), str(round(message["main"]["temp_max"] -273.15),3), str(message["main"]["pressure"]), str(message["main"]["humidity"]), str(message["wind"]["speed"]), str(message["wind"]["deg"])))
+                    session.execute("INSERT INTO "+ continente +" (id, time,coord, name, country, temp, temp_min, temp_max, pressure, humidity, wind_speed, wind_deg) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);", (str(message["id"]), str(time),"lon:"+str(message["coord"]["lon"]) + " lat:"+str(message["coord"]["lat"]), message["name"], message["sys"]["country"], str(round(message["main"]["temp"] -273.15),1), str(round(message["main"]["temp_min"] -273.15),1), str(round(message["main"]["temp_max"] -273.15),1), str(message["main"]["pressure"]), str(message["main"]["humidity"]), str(message["wind"]["speed"]), str(message["wind"]["deg"])))
                     
                 except Exception as e:
                     time = datetime.now()

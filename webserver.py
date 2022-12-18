@@ -3,6 +3,7 @@ from cassandra.cluster import Cluster
 import json
 import cassandra.auth
 import ssl
+from flask_cors import CORS
 
 
 ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
@@ -12,6 +13,7 @@ cluster = Cluster(['climappuser.cassandra.cosmos.azure.com'], port = '10350', au
 session = cluster.connect()
 session.execute('USE weather')
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/alldata')
 def getAllCountries():

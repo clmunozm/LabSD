@@ -41,10 +41,11 @@ while True:
             if (continente!=False):
                 time = datetime.now()
                 try:
-                    session.execute("INSERT INTO "+ continente +" (id, time,coord, name, country, temp, temp_min, temp_max, pressure, humidity, wind_speed, wind_deg) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);", (str(message["id"]), str(time),"lon:"+str(message["coord"]["lon"]) + " lat:"+str(message["coord"]["lat"]), message["name"], message["sys"]["country"], str(message["main"]["temp"]), str(message["main"]["temp_min"]), str(message["main"]["temp_max"]), str(message["main"]["pressure"]), str(message["main"]["humidity"]), str(message["wind"]["speed"]), str(message["wind"]["deg"])))
+                    session.execute("INSERT INTO "+ continente +" (id, time,coord, name, country, temp, temp_min, temp_max, pressure, humidity, wind_speed, wind_deg) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);", (str(message["id"]), str(time),"lon:"+str(message["coord"]["lon"]) + " lat:"+str(message["coord"]["lat"]), message["name"], message["sys"]["country"], str(message["main"]["temp"] -273.15), str(message["main"]["temp_min"] -273.15), str(message["main"]["temp_max"] -273.15), str(message["main"]["pressure"]), str(message["main"]["humidity"]), str(message["wind"]["speed"]), str(message["wind"]["deg"])))
                     
                 except Exception as e:
-                    #session.execute("UPDATE "+continente+" SET time=%s, temp=%s, temp_min=%s, temp_max=%s, pressure=%s, humidity=%s, wind_speed=%s, wind_deg=%s WHERE id=%s;", (str(time),str(message["main"]["temp"]), str(message["main"]["temp_min"]), str(message["main"]["temp_max"]), str(message["main"]["pressure"]),str(message["main"]["humidity"]), str(message["wind"]["speed"]), str(message["wind"]["deg"]),str(message['id'])))
-                    print("ERROR AL ACTUALIZAR LA BASE DE DATOS")
+                    time = datetime.now()
+                    print("[",time,"] - ERROR AL ACTUALIZAR LA BASE DE DATOS")
         else:
-            print(message['name'] + " response: " + str(message["cod"]))
+            time = datetime.now()
+            print("[",time,"] - " + message['name'] + " response: " + str(message["cod"]))

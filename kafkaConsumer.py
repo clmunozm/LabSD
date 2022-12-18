@@ -10,11 +10,6 @@ from datetime import datetime
 import ssl
 
 # Algoritmo
-
-'''
-cluster = Cluster()
-session= cluster.connect('weather')
-'''
 ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
 ssl_context.verify_mode = ssl.CERT_NONE
 auth_provider = cassandra.auth.PlainTextAuthProvider(username='climappuser', password='IVuMTDjsjIZZPUeFfgELtPmPWQoPtCk6GkceUD88DMULU2295IikgzibOIyvfdz8Us5mdzJrqXGQACDbPlb4tg==')
@@ -30,7 +25,6 @@ consumer = KafkaConsumer(kafka_topic_input, value_deserializer=lambda x: loads(x
 
 # While True, se detiene con ctrl + c
 session.execute('USE weather')
-#session.execute("INSERT INTO america"+" (id, time,coord, name, country, temp, temp_min, temp_max, pressure, humidity, wind_speed, wind_deg) VALUES (1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);")
 while True:
     time = datetime.now()
     print("[",time,"] - CONSUMIENDO DATOS DEL CLIMA...")
@@ -41,7 +35,7 @@ while True:
             if (continente!=False):
                 time = datetime.now()
                 try:
-                    session.execute("INSERT INTO "+ continente +" (id, time,coord, name, country, temp, temp_min, temp_max, pressure, humidity, wind_speed, wind_deg) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);", (str(message["id"]), str(time),"lon:"+str(message["coord"]["lon"]) + " lat:"+str(message["coord"]["lat"]), message["name"], message["sys"]["country"], str(round(message["main"]["temp"] -273.15),1), str(round(message["main"]["temp_min"] -273.15),1), str(round(message["main"]["temp_max"] -273.15),1), str(message["main"]["pressure"]), str(message["main"]["humidity"]), str(message["wind"]["speed"]), str(message["wind"]["deg"])))
+                    session.execute("INSERT INTO "+ continente +" (id, time,coord, name, country, temp, temp_min, temp_max, pressure, humidity, wind_speed, wind_deg, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);", (str(message["id"]), str(time),"lon:"+str(message["coord"]["lon"]) + " lat:"+str(message["coord"]["lat"]), message["name"], message["sys"]["country"], str(round(message["main"]["temp"] -273.15, 1)), str(round(message["main"]["temp_min"] -273.15, 1)), str(round(message["main"]["temp_max"] -273.15, 1)), str(message["main"]["pressure"]), str(message["main"]["humidity"]), str(message["wind"]["speed"]), str(message["wind"]["deg"]), message["weather"][0]["main"]))
                     
                 except Exception as e:
                     time = datetime.now()

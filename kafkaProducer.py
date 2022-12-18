@@ -30,4 +30,7 @@ while True:
                 print("[",time,"] - " + pais + " response: " + str(response1["cod"]))
     time = datetime.now()
     print("[",time,"] - Termina el ciclo " + str(contador))
-    t.sleep(60)
+    print("\nESPERNADO...\n")
+    t.sleep(600)
+    time = datetime.now()
+    print("[",time,"] - EXTRAYENDO DATOS DE OPEN WEATHER MAP...")

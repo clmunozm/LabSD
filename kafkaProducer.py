@@ -4,7 +4,7 @@
 from kafka import KafkaProducer
 import json
 import requests
-import time
+import time as t
 from funciones import continents, apiKey
 import os.path
 from datetime import datetime
@@ -30,4 +30,4 @@ while True:
                 print("[",time,"] - " + pais + " response: " + str(response1["cod"]))
     time = datetime.now()
     print("[",time,"] - Termina el ciclo " + str(contador))
-    time.sleep(60)
+    t.sleep(60)
